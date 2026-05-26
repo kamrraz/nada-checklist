@@ -5,180 +5,271 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nada's Unit - Onboarding</title>
 <style>
+:root {
+  --bg: #F6F5F1;
+  --card: #FFFFFF;
+  --grn: #25855A;
+  --grn-light: #EBF5EE;
+  --acc: #B8916A;
+  --acc-light: #FAF3EC;
+  --text: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: #E5E2DB;
+  --red: #C53030;
+}
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: #f0f4f0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-header { background: #2d5016; color: #fff; padding: 20px 16px; text-align: center; }
-header h1 { font-size: 20px; font-weight: 700; }
-header p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
-.container { max-width: 600px; margin: 0 auto; padding: 16px; }
-.section { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-.section-title { font-size: 13px; font-weight: 700; color: #2d5016; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-.check-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; gap: 12px; }
+body { background: var(--bg); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); min-height: 100vh; }
+.header { background: var(--grn); color: #fff; padding: 28px 24px 24px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(37,133,90,0.3); }
+.header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.header p { font-size: 13px; opacity: 0.85; margin-top: 3px; }
+.progress-bar-wrap { background: rgba(255,255,255,0.2); border-radius: 99px; height: 6px; margin: 14px auto 0; max-width: 320px; }
+.progress-bar-fill { background: #fff; height: 100%; border-radius: 99px; transition: width 0.5s ease; }
+.progress-label { font-size: 12px; opacity: 0.9; margin-top: 6px; }
+.container { max-width: 720px; margin: 0 auto; padding: 20px 16px 80px; }
+.section { background: var(--card); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.section-header { padding: 16px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.section-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.section-mini-bar { display: flex; align-items: center; gap: 8px; }
+.mini-bar-track { width: 60px; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.mini-bar-fill { height: 100%; background: var(--grn); border-radius: 99px; transition: width 0.4s ease; }
+.mini-count { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.check-item { display: flex; align-items: center; gap: 14px; padding: 13px 20px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.15s; }
 .check-item:last-child { border-bottom: none; }
-.check-item.done .check-label { text-decoration: line-through; color: #999; }
-.check-box { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #ccc; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.check-box.checked { background: #2d5016; border-color: #2d5016; }
-.check-box.checked::after { content: ""; display: block; width: 6px; height: 10px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translateY(-2px); }
-.check-label { font-size: 15px; color: #222; flex: 1; }
-.callout { margin-bottom: 14px; background: #f8f9f8; border-radius: 8px; padding: 12px; }
-.callout:last-child { margin-bottom: 0; }
-.callout-title { font-size: 11px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; }
-.field-row { margin-bottom: 8px; }
-.field-label { display: block; font-size: 11px; color: #888; margin-bottom: 3px; font-weight: 600; }
-.field-input { width: 100%; border: 1px solid #e0e0e0; border-radius: 6px; padding: 8px 10px; font-size: 14px; background: #fff; color: #222; outline: none; }
-.field-input:focus { border-color: #2d5016; }
-.save-btn { display: block; width: 100%; background: #2d5016; color: #fff; border: none; border-radius: 10px; padding: 16px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 8px; }
-.loading-state { text-align: center; padding: 60px 20px; color: #666; }
-.spinner { width: 32px; height: 32px; border: 3px solid #e0e0e0; border-top-color: #2d5016; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+.check-item:hover { background: #FAFAF8; }
+.check-box { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; background: #fff; }
+.check-box.checked { background: var(--grn); border-color: var(--grn); }
+.check-box.checked::after { content: ""; display: block; width: 10px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-1px); }
+.check-label { font-size: 14px; line-height: 1.4; flex: 1; }
+.check-item.done .check-label { color: var(--muted); text-decoration: line-through; }
+.info-callout { border-bottom: 1px solid var(--border); }
+.info-callout:last-child { border-bottom: none; }
+.callout-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--acc); padding: 12px 20px 6px; }
+.field-row { display: flex; align-items: center; gap: 10px; padding: 8px 20px; border-bottom: 1px solid #F0EDE8; }
+.field-row:last-child { border-bottom: none; }
+.field-label { font-size: 13px; color: var(--muted); width: 130px; flex-shrink: 0; }
+.field-input { flex: 1; border: 1px solid transparent; border-radius: 8px; padding: 6px 10px; font-size: 13px; background: transparent; color: var(--text); transition: all 0.2s; font-family: inherit; }
+.field-input:focus { outline: none; border-color: var(--grn); background: var(--grn-light); }
+.field-input.unsaved { border-color: var(--acc); background: var(--acc-light); }
+.save-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--border); padding: 12px 20px; display: flex; gap: 10px; align-items: center; z-index: 200; box-shadow: 0 -2px 12px rgba(0,0,0,0.06); }
+.save-btn { flex: 1; background: var(--grn); color: #fff; border: none; border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+.save-btn:hover { background: #1E6B48; }
+.save-btn:disabled { background: #9CB8AC; cursor: not-allowed; }
+.save-status { font-size: 13px; color: var(--muted); min-width: 100px; text-align: right; }
+.save-status.ok { color: var(--grn); }
+.save-status.err { color: var(--red); }
+.loading-state { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 15px; }
+.spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--grn); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 14px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.progress-bar { background: #e0e0e0; border-radius: 4px; height: 6px; margin-bottom: 12px; overflow: hidden; }
-.progress-fill { background: #2d5016; height: 100%; border-radius: 4px; transition: width 0.3s; }
-.progress-text { font-size: 12px; color: #666; margin-bottom: 6px; }
+.drive-link { display: flex; align-items: center; gap: 8px; padding: 14px 20px; font-size: 13px; color: var(--grn); text-decoration: none; font-weight: 600; border-top: 1px solid var(--border); }
+.drive-link:hover { background: var(--grn-light); }
+@media (max-width: 480px) {
+  .field-label { width: 110px; font-size: 12px; }
+  .field-input { font-size: 12px; }
+  .section-title { font-size: 14px; }
+}
 </style>
 </head>
 <body>
-<header>
+<div class="header">
   <h1>Nada's Unit Onboarding</h1>
-  <p>Track setup progress for your unit</p>
-</header>
-<div class="container">
-  <div id="app"><div class="loading-state"><div class="spinner"></div><p>Loading from Notion...</p></div></div>
-  <button class="save-btn" onclick="saveFields()">Save Unit Info</button>
+  <p>Dubai Short-Term Rental Setup</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="mainProgress" style="width:0%"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">Loading...</div>
+</div>
+<div class="container" id="app">
+  <div class="loading-state">
+    <div class="spinner"></div>
+    Loading from Notion...
+  </div>
+</div>
+<div class="save-bar">
+  <button class="save-btn" id="saveBtn" onclick="saveFields()">Save Unit Info</button>
+  <div class="save-status" id="saveStatus"></div>
 </div>
 <script>
-var GROUPS = [
-  {ctx:"Building Details",fields:["Management Email","Building Registration Process","Building Name","Address","Location Link"]},
-  {ctx:"Unit Specs",fields:["Bedrooms","Bathrooms","Unit Size (SQM)","Bed Size(s)","Sofa Bed","Kitchenware Quantity"]},
-  {ctx:"Access Details",fields:["Smart Lock","Smart Lock Code","Number of Keys","Access Cards (Quantity)"]},
-  {ctx:"Wi-Fi Details",fields:["Username / SSID","Password"]},
-  {ctx:"Parking Details",fields:["Parking Number","Floor / Location"]},
-  {ctx:"DEWA Login",fields:["Username","Password","Account Number"]},
-  {ctx:"DU Login",fields:["Username","Password","Account Number","Due Date"]}
+var blockMap = {};
+var fieldMeta = {};
+var dirtyFields = {};
+var cbState = {};
+var STRUCTURE = [
+  {id:"reg", title:"Registration & Compliance", checks:["DTCM Registration","DTCM Permit","Tourism Dirham Registration","Ejari Registration","Liability Insurance"]},
+  {id:"fur", title:"Furnishing & Amenities", checks:["Furnish per DTCM List","Smoke Detectors","Fire Extinguisher","Carbon Monoxide Detector","First Aid Kit","WiFi Router","Smart TV / Streaming Device"]},
+  {id:"svc", title:"Setup & Services", checks:["DEWA Account Setup","DU Telecom Setup","Smart Lock / Key Management","Professional Photography"]},
+  {id:"doc", title:"Documents", checks:["Passport / Emirates ID Copy","Title Deed","DTCM Permit Certificate","Ejari Certificate","Insurance Policy","DEWA Connection Letter","Inventory List Signed"]},
+  {id:"fin", title:"Final Inspection", checks:["Unit Deep Cleaned","All Appliances Tested","Guest Welcome Pack Ready","Listing Created on Platforms","Unit Photographed & Published"]}
 ];
-
-function apiGet(path){
-  return fetch(path).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
+var GROUPS = [
+  {ctx:"Building Details", fields:["Management Email","Building Registration Process","Building Name","Address","Location Link"]},
+  {ctx:"Unit Specs", fields:["Bedrooms","Bathrooms","Unit Size (SQM)","Bed Size(s)","Sofa Bed","Kitchenware Quantity"]},
+  {ctx:"Access Details", fields:["Smart Lock","Smart Lock Code","Number of Keys","Access Cards (Quantity)"]},
+  {ctx:"Wi-Fi Details", fields:["Username / SSID","Password"]},
+  {ctx:"Parking Details", fields:["Parking Number","Floor / Location"]},
+  {ctx:"DEWA Login", fields:["Username","Password","Account Number"]},
+  {ctx:"DU Login", fields:["Username","Password","Account Number","Due Date"]}
+];
+function apiGet(path) {
+  return fetch(path).then(function(r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
 }
-
-function apiPatch(path,body){
-  return fetch(path,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
-    .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
+function apiPatch(path, body) {
+  return fetch(path, {method:"PATCH", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)})
+    .then(function(r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
 }
-
-function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-
-function renderPage(data){
-  var cbMap={}, fMap={};
-  for(var i=0;i<data.checkboxes.length;i++) cbMap[data.checkboxes[i].label]=data.checkboxes[i];
-  for(var i=0;i<data.fields.length;i++) fMap[data.fields[i].label]=data.fields[i];
-
-  var done=0;
-  for(var i=0;i<data.checkboxes.length;i++) if(data.checkboxes[i].checked) done++;
-  var total=data.checkboxes.length, pct=total>0?Math.round(done/total*100):0;
-
-  var html="";
-
-  html+="<div class=\"section\">";
-  html+="<div class=\"progress-text\">"+done+" of "+total+" complete ("+pct+"%)</div>";
-  html+="<div class=\"progress-bar\"><div class=\"progress-fill\" id=\"pfill\" style=\"width:"+pct+"%\"></div></div>";
-  html+="</div>";
-
-  html+="<div class=\"section\">";
-  html+="<div class=\"section-title\">Onboarding Checklist</div>";
-  for(var i=0;i<data.checkboxes.length;i++){
-    var cb=data.checkboxes[i];
-    var eid=cb.id.replace(/-/g,"");
-    html+="<div class=\"check-item"+(cb.checked?" done":"")+"\" id=\"ci_"+eid+"\" data-nid=\""+esc(cb.id)+"\" data-eid=\""+eid+"\">";
-    html+="<div class=\"check-box"+(cb.checked?" checked":"")+"\" id=\"cx_"+eid+"\"></div>";
-    html+="<span class=\"check-label\">"+esc(cb.label)+"</span>";
-    html+="</div>";
-  }
-  html+="</div>";
-
-  html+="<div class=\"section\">";
-  html+="<div class=\"section-title\">Unit Information</div>";
-  for(var g=0;g<GROUPS.length;g++){
-    var grp=GROUPS[g];
-    html+="<div class=\"callout\">";
-    html+="<div class=\"callout-title\">"+esc(grp.ctx)+"</div>";
-    for(var f=0;f<grp.fields.length;f++){
-      var fn=grp.fields[f], fd=fMap[fn];
-      var feid=fd?fd.id.replace(/-/g,""):"nf_"+g+"_"+f;
-      var fid=fd?fd.id:"";
-      html+="<div class=\"field-row\">";
-      html+="<label class=\"field-label\">"+esc(fn)+"</label>";
-      html+="<input class=\"field-input\" id=\"fi_"+feid+"\" data-fid=\""+esc(fid)+"\" data-fl=\""+esc(fn)+"\" placeholder=\"Not set\">";
-      html+="</div>";
+function esc(s) { return (s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function renderPage(data) {
+  var cbByLabel = {};
+  for (var i = 0; i < data.checkboxes.length; i++) cbByLabel[data.checkboxes[i].label.toLowerCase().trim()] = data.checkboxes[i];
+  var fieldByLabel = {};
+  for (var i = 0; i < data.fields.length; i++) fieldByLabel[data.fields[i].label.toLowerCase().trim()] = data.fields[i];
+  var html = "";
+  for (var s = 0; s < STRUCTURE.length; s++) {
+    var sec = STRUCTURE[s];
+    html += "<div class=\"section\">";
+    html += "<div class=\"section-header\">";
+    html += "<span class=\"section-title\">" + sec.title + "</span>";
+    html += "<div class=\"section-mini-bar\">";
+    html += "<div class=\"mini-bar-track\"><div class=\"mini-bar-fill\" id=\"bar_" + sec.id + "\" style=\"width:0%\"></div></div>";
+    html += "<span class=\"mini-count\" id=\"cnt_" + sec.id + "\">0/" + sec.checks.length + "</span>";
+    html += "</div></div>";
+    for (var c = 0; c < sec.checks.length; c++) {
+      var label = sec.checks[c];
+      var ncb = cbByLabel[label.toLowerCase().trim()];
+      var eid = "cb_" + sec.id + "_" + c;
+      var checked = ncb ? ncb.checked : false;
+      if (ncb) { blockMap[eid] = ncb.id; cbState[ncb.id] = checked; }
+      html += "<div class=\"check-item" + (checked ? " done" : "") + "\" id=\"item_" + eid + "\" data-eid=\"" + eid + "\" data-nid=\"" + (ncb ? esc(ncb.id) : "") + "\">";
+      html += "<div class=\"check-box" + (checked ? " checked" : "") + "\" id=\"box_" + eid + "\"></div>";
+      html += "<span class=\"check-label\">" + esc(label) + "</span>";
+      html += "</div>";
     }
-    html+="</div>";
+    html += "</div>";
   }
-  html+="</div>";
-
-  document.getElementById("app").innerHTML=html;
-
-  for(var g=0;g<GROUPS.length;g++){
-    for(var f=0;f<GROUPS[g].fields.length;f++){
-      var fn=GROUPS[g].fields[f], fd=fMap[fn];
-      if(fd&&fd.value){
-        var el=document.getElementById("fi_"+fd.id.replace(/-/g,""));
-        if(el) el.value=fd.value;
+  html += "<div class=\"section\">";
+  html += "<div class=\"section-header\"><span class=\"section-title\">Unit Information</span></div>";
+  for (var g = 0; g < GROUPS.length; g++) {
+    var grp = GROUPS[g];
+    html += "<div class=\"info-callout\">";
+    html += "<div class=\"callout-title\">" + esc(grp.ctx) + "</div>";
+    for (var f = 0; f < grp.fields.length; f++) {
+      var fn = grp.fields[f];
+      var inputId = "field_" + g + "_" + f;
+      html += "<div class=\"field-row\">";
+      html += "<span class=\"field-label\">" + esc(fn) + "</span>";
+      html += "<input class=\"field-input\" id=\"" + inputId + "\" type=\"text\" placeholder=\"--\">";
+      html += "</div>";
+    }
+    html += "</div>";
+  }
+  html += "<a class=\"drive-link\" href=\"https://drive.google.com/drive/folders/1jUqWcN1L9APnnUOE4417VLYcKxo2WneV\" target=\"_blank\">Open Google Drive Documents</a>";
+  html += "</div>";
+  document.getElementById("app").innerHTML = html;
+  for (var g = 0; g < GROUPS.length; g++) {
+    for (var f = 0; f < GROUPS[g].fields.length; f++) {
+      var fn = GROUPS[g].fields[f];
+      var fd = fieldByLabel[fn.toLowerCase().trim()];
+      var inputId = "field_" + g + "_" + f;
+      var el = document.getElementById(inputId);
+      if (el && fd) {
+        if (fd.value) el.value = fd.value;
+        fieldMeta[inputId] = {notionId: fd.id, label: fd.label};
+        el.addEventListener("input", (function(iid) { return function() { markDirty(iid); }; })(inputId));
       }
     }
   }
-
-  var items=document.querySelectorAll(".check-item");
-  for(var i=0;i<items.length;i++){
-    items[i].addEventListener("click",function(){
-      toggleCheck(this.getAttribute("data-eid"),this.getAttribute("data-nid"),this);
+  var items = document.querySelectorAll(".check-item");
+  for (var i = 0; i < items.length; i++) {
+    items[i].addEventListener("click", function() {
+      toggleCheck(this.getAttribute("data-eid"), this.getAttribute("data-nid"), this);
     });
   }
+  recalcProgress();
 }
-
-function toggleCheck(eid,nid,el){
-  var item=el||document.getElementById("ci_"+eid);
-  var box=document.getElementById("cx_"+eid);
-  var checked=item.classList.contains("done");
-  var nv=!checked;
-  if(nv){item.classList.add("done");box.classList.add("checked");}
-  else{item.classList.remove("done");box.classList.remove("checked");}
-  updateProgress();
-  apiPatch("/api/checkbox",{id:nid,checked:nv}).catch(function(e){
-    if(nv){item.classList.remove("done");box.classList.remove("checked");}
-    else{item.classList.add("done");box.classList.add("checked");}
-    updateProgress();
-    alert("Could not save: "+e.message);
-  });
-}
-
-function updateProgress(){
-  var items=document.querySelectorAll(".check-item");
-  var done=document.querySelectorAll(".check-item.done").length;
-  var total=items.length, pct=total>0?Math.round(done/total*100):0;
-  var fill=document.getElementById("pfill");
-  var txt=document.querySelector(".progress-text");
-  if(fill) fill.style.width=pct+"%";
-  if(txt) txt.textContent=done+" of "+total+" complete ("+pct+"%)";
-}
-
-function saveFields(){
-  var inputs=document.querySelectorAll(".field-input");
-  var patches=[];
-  for(var i=0;i<inputs.length;i++){
-    var fid=inputs[i].getAttribute("data-fid");
-    var fl=inputs[i].getAttribute("data-fl");
-    var fv=inputs[i].value;
-    if(fid) patches.push(apiPatch("/api/field",{id:fid,label:fl,value:fv}));
+function recalcProgress() {
+  var totalAll = 0, doneAll = 0;
+  for (var s = 0; s < STRUCTURE.length; s++) {
+    var sec = STRUCTURE[s];
+    var secDone = 0;
+    for (var c = 0; c < sec.checks.length; c++) {
+      var item = document.getElementById("item_cb_" + sec.id + "_" + c);
+      if (item && item.classList.contains("done")) secDone++;
+    }
+    var pct = sec.checks.length > 0 ? Math.round(secDone / sec.checks.length * 100) : 0;
+    var bar = document.getElementById("bar_" + sec.id);
+    var cnt = document.getElementById("cnt_" + sec.id);
+    if (bar) bar.style.width = pct + "%";
+    if (cnt) cnt.textContent = secDone + "/" + sec.checks.length;
+    totalAll += sec.checks.length;
+    doneAll += secDone;
   }
-  Promise.all(patches).then(function(){alert("Saved!");}).catch(function(e){alert("Error: "+e.message);});
+  var mainPct = totalAll > 0 ? Math.round(doneAll / totalAll * 100) : 0;
+  var mp = document.getElementById("mainProgress");
+  var pl = document.getElementById("progressLabel");
+  if (mp) mp.style.width = mainPct + "%";
+  if (pl) pl.textContent = doneAll + " of " + totalAll + " complete (" + mainPct + "%)";
 }
-
-function load(){
-  apiGet("/api/page").then(function(data){renderPage(data);}).catch(function(e){
-    document.getElementById("app").innerHTML="<div class=\"loading-state\">Could not load: "+e.message+"</div>";
+function toggleCheck(eid, nid, el) {
+  if (!nid) return;
+  var newChecked = !cbState[nid];
+  cbState[nid] = newChecked;
+  var box = document.getElementById("box_" + eid);
+  var item = el || document.getElementById("item_" + eid);
+  if (newChecked) { box.classList.add("checked"); item.classList.add("done"); }
+  else { box.classList.remove("checked"); item.classList.remove("done"); }
+  recalcProgress();
+  apiPatch("/api/checkbox", {id: nid, checked: newChecked}).catch(function(e) {
+    cbState[nid] = !newChecked;
+    if (!newChecked) { box.classList.add("checked"); item.classList.add("done"); }
+    else { box.classList.remove("checked"); item.classList.remove("done"); }
+    recalcProgress();
+    alert("Could not save. Check your connection.");
   });
 }
-
-document.addEventListener("DOMContentLoaded",load);
+function markDirty(inputId) {
+  dirtyFields[inputId] = true;
+  var el = document.getElementById(inputId);
+  if (el) el.classList.add("unsaved");
+  setStatus("", "");
+}
+function setStatus(msg, type) {
+  var el = document.getElementById("saveStatus");
+  if (!el) return;
+  el.textContent = msg;
+  el.className = "save-status" + (type ? " " + type : "");
+}
+function saveFields() {
+  var keys = Object.keys(dirtyFields);
+  if (keys.length === 0) { setStatus("Nothing to save", "ok"); return; }
+  var btn = document.getElementById("saveBtn");
+  btn.disabled = true;
+  btn.textContent = "Saving...";
+  var patches = [];
+  for (var i = 0; i < keys.length; i++) {
+    var inputId = keys[i];
+    var meta = fieldMeta[inputId];
+    if (!meta) continue;
+    var el = document.getElementById(inputId);
+    var val = el ? el.value : "";
+    patches.push((function(iid, m, v) {
+      return apiPatch("/api/field", {id: m.notionId, label: m.label, value: v}).then(function() {
+        delete dirtyFields[iid];
+        var fel = document.getElementById(iid);
+        if (fel) fel.classList.remove("unsaved");
+      });
+    })(inputId, meta, val));
+  }
+  Promise.all(patches).then(function() {
+    btn.disabled = false; btn.textContent = "Save Unit Info"; setStatus("Saved to Notion", "ok");
+  }).catch(function(e) {
+    btn.disabled = false; btn.textContent = "Save Unit Info"; setStatus("Some fields failed", "err");
+  });
+}
+function load() {
+  apiGet("/api/page").then(function(data) { renderPage(data); }).catch(function(e) {
+    document.getElementById("app").innerHTML = "<div class=\"loading-state\">Could not load Notion data.<br><small style=\"color:#999;margin-top:8px;display:block\">" + e.message + "</small><button onclick=\"load()\" style=\"margin-top:16px;padding:10px 24px;background:var(--grn);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;\">Retry</button></div>";
+  });
+}
+document.addEventListener("DOMContentLoaded", load);
 </script>
 </body>
 </html>
