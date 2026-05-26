@@ -36,24 +36,16 @@ async function fetchBlocks(blockId) {
   return data.results || [];
 }
 
-// GET /api/page — returns all checkboxes and fields from Notion
+// GET /api/page
 app.get('/api/page', async (req, res) => {
   try {
     const blocks = await fetchBlocks(PAGE_ID);
-
     const checkboxes = [];
     const fields = [];
-
     for (const block of blocks) {
       if (block.type === 'to_do') {
         const label = extractText(block.to_do.rich_text);
-        if (label) {
-          checkboxes.push({
-            id: block.id,
-            label,
-            checked: block.to_do.checked || false
-          });
-        }
+        if (label) checkboxes.push({ id: block.id, label, checked: block.to_do.checked || false });
       } else if (block.type === 'callout') {
         const context = extractText(block.callout.rich_text);
         if (block.has_children) {
@@ -65,19 +57,13 @@ app.get('/api/page', async (req, res) => {
               if (colonIdx > 0) {
                 const label = text.substring(0, colonIdx).trim();
                 const value = text.substring(colonIdx + 1).trim();
-                fields.push({
-                  id: child.id,
-                  label,
-                  value,
-                  context
-                });
+                fields.push({ id: child.id, label, value, context });
               }
             }
           }
         }
       }
     }
-
     res.json({ checkboxes, fields });
   } catch (e) {
     console.error('GET /api/page error:', e);
@@ -85,52 +71,99 @@ app.get('/api/page', async (req, res) => {
   }
 });
 
-// PATCH /api/checkbox — toggle a checkbox block
+// PATCH /api/checkbox
 app.patch('/api/checkbox', async (req, res) => {
   const { id, checked } = req.body;
-  if (!id || checked === undefined) {
-    return res.status(400).json({ error: 'id and checked are required' });
-  }
+  if (!id || checked === undefined) return res.status(400).json({ error: 'id and checked are required' });
   try {
     const r = await fetch(`https://api.notion.com/v1/blocks/${id}`, {
-      method: 'PATCH',
-      headers: notionHeaders(),
+      method: 'PATCH', headers: notionHeaders(),
       body: JSON.stringify({ to_do: { checked } })
     });
-    if (!r.ok) {
-      const err = await r.text();
-      throw new Error(`Notion error ${r.status}: ${err}`);
-    }
+    if (!r.ok) { const err = await r.text(); throw new Error(`Notion error ${r.status}: ${err}`); }
     res.json({ ok: true });
-  } catch (e) {
-    console.error('PATCH /api/checkbox error:', e);
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { console.error('PATCH /api/checkbox error:', e); res.status(500).json({ error: e.message }); }
 });
 
-// PATCH /api/field — update a paragraph (field) block
+// PATCH /api/field
 app.patch('/api/field', async (req, res) => {
   const { id, label, value } = req.body;
-  if (!id || !label) {
-    return res.status(400).json({ error: 'id and label are required' });
-  }
+  if (!id || !label) return res.status(400).json({ error: 'id and label are required' });
   try {
     const r = await fetch(`https://api.notion.com/v1/blocks/${id}`, {
-      method: 'PATCH',
-      headers: notionHeaders(),
+      method: 'PATCH', headers: notionHeaders(),
+      body: JSON.stringify({ paragraph: { rich_text: [{ type: 'text', text: { content: `${label}: ${value || ''}` } }] } })
+    });
+    if (!r.ok) { const err = await r.text(); throw new Error(`Notion error ${r.status}: ${err}`); }
+    res.json({ ok: true });
+  } catch (e) { console.error('PATCH /api/field error:', e); res.status(500).json({ error: e.message }); }
+});
+
+// POST /api/submit — archive to new Notion page, reset template
+app.post('/api/submit', async (req, res) => {
+  const { unitNumber, fields, checkboxes } = req.body;
+  if (!unitNumber) return res.status(400).json({ error: 'unitNumber is required' });
+  try {
+    const title = `Unit ${unitNumber} - Nada's Unit Onboarding`;
+    const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+    const children = [
+      { object: 'block', type: 'paragraph', paragraph: { rich_text: [{ type: 'text', text: { content: `Submitted: ${dateStr}` }, annotations: { color: 'gray' } }] } },
+      { object: 'block', type: 'divider', divider: {} },
+      { object: 'block', type: 'heading_2', heading_2: { rich_text: [{ type: 'text', text: { content: 'Unit Information' } }] } }
+    ];
+
+    if (fields && fields.length > 0) {
+      for (const f of fields) {
+        children.push({
+          object: 'block', type: 'paragraph',
+          paragraph: { rich_text: [
+            { type: 'text', text: { content: `${f.label}: ` }, annotations: { bold: true } },
+            { type: 'text', text: { content: f.value || '—' } }
+          ]}
+        });
+      }
+    }
+
+    children.push({ object: 'block', type: 'divider', divider: {} });
+    const doneCount = checkboxes ? checkboxes.filter(c => c.checked).length : 0;
+    const totalCount = checkboxes ? checkboxes.length : 0;
+    children.push({ object: 'block', type: 'heading_2', heading_2: { rich_text: [{ type: 'text', text: { content: `Onboarding Checklist (${doneCount}/${totalCount} complete)` } }] } });
+
+    if (checkboxes && checkboxes.length > 0) {
+      for (const cb of checkboxes) {
+        children.push({ object: 'block', type: 'to_do', to_do: { rich_text: [{ type: 'text', text: { content: cb.label } }], checked: cb.checked || false } });
+      }
+    }
+
+    // Create archive page
+    const createRes = await fetch('https://api.notion.com/v1/pages', {
+      method: 'POST', headers: notionHeaders(),
       body: JSON.stringify({
-        paragraph: {
-          rich_text: [{ type: 'text', text: { content: `${label}: ${value || ''}` } }]
-        }
+        parent: { page_id: PAGE_ID },
+        properties: { title: { title: [{ type: 'text', text: { content: title } }] } },
+        children
       })
     });
-    if (!r.ok) {
-      const err = await r.text();
-      throw new Error(`Notion error ${r.status}: ${err}`);
+    if (!createRes.ok) { const err = await createRes.text(); throw new Error(`Create page error ${createRes.status}: ${err}`); }
+
+    // Reset template checkboxes
+    if (checkboxes && checkboxes.length > 0) {
+      await Promise.all(checkboxes.map(cb =>
+        fetch(`https://api.notion.com/v1/blocks/${cb.id}`, { method: 'PATCH', headers: notionHeaders(), body: JSON.stringify({ to_do: { checked: false } }) })
+      ));
     }
-    res.json({ ok: true });
+
+    // Clear template fields
+    if (fields && fields.length > 0) {
+      await Promise.all(fields.map(f =>
+        fetch(`https://api.notion.com/v1/blocks/${f.id}`, { method: 'PATCH', headers: notionHeaders(), body: JSON.stringify({ paragraph: { rich_text: [{ type: 'text', text: { content: `${f.label}: ` } }] } }) })
+      ));
+    }
+
+    res.json({ ok: true, title });
   } catch (e) {
-    console.error('PATCH /api/field error:', e);
+    console.error('POST /api/submit error:', e);
     res.status(500).json({ error: e.message });
   }
 });
@@ -138,7 +171,5 @@ app.patch('/api/field', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Nada's Unit Checklist running on port ${PORT}`);
-  if (!NOTION_TOKEN) {
-    console.warn('WARNING: NOTION_TOKEN is not set!');
-  }
+  if (!NOTION_TOKEN) console.warn('WARNING: NOTION_TOKEN is not set!');
 });
