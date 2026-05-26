@@ -18,397 +18,212 @@
     --red: #C53030;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    color: var(--text);
-    min-height: 100vh;
-  }
-  .header {
-    background: var(--grn);
-    color: #fff;
-    padding: 28px 24px 24px;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(37,133,90,0.3);
-  }
+  body { background: var(--bg); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); min-height: 100vh; }
+  .header { background: var(--grn); color: #fff; padding: 28px 24px 24px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(37,133,90,0.3); }
   .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
   .header p { font-size: 13px; opacity: 0.85; margin-top: 3px; }
-  .progress-bar-wrap {
-    background: rgba(255,255,255,0.2);
-    border-radius: 99px;
-    height: 6px;
-    margin: 14px auto 0;
-    max-width: 320px;
-  }
-  .progress-bar-fill {
-    background: #fff;
-    height: 100%;
-    border-radius: 99px;
-    transition: width 0.5s ease;
-  }
-  .progress-label {
-    font-size: 12px;
-    opacity: 0.9;
-    margin-top: 6px;
-    text-align: center;
-  }
+  .progress-bar-wrap { background: rgba(255,255,255,0.2); border-radius: 99px; height: 6px; margin: 14px auto 0; max-width: 320px; }
+  .progress-bar-fill { background: #fff; height: 100%; border-radius: 99px; transition: width 0.5s ease; }
+  .progress-label { font-size: 12px; opacity: 0.9; margin-top: 6px; text-align: center; }
   .container { max-width: 720px; margin: 0 auto; padding: 20px 16px 80px; }
   .section { background: var(--card); border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-  .section-header {
-    padding: 16px 20px 14px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .section-header { padding: 16px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
   .section-title { font-size: 15px; font-weight: 700; color: var(--text); }
   .section-mini-bar { display: flex; align-items: center; gap: 8px; }
   .mini-bar-track { width: 60px; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
   .mini-bar-fill { height: 100%; background: var(--grn); border-radius: 99px; transition: width 0.4s ease; }
   .mini-count { font-size: 11px; color: var(--muted); white-space: nowrap; }
-  .check-item {
-    display: flex; align-items: center; gap: 14px;
-    padding: 13px 20px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
+  .check-item { display: flex; align-items: center; gap: 14px; padding: 13px 20px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.15s; }
   .check-item:last-child { border-bottom: none; }
   .check-item:hover { background: #FAFAF8; }
   .check-item input[type=checkbox] { display: none; }
-  .check-box {
-    width: 20px; height: 20px;
-    border: 2px solid var(--border);
-    border-radius: 5px;
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-    background: #fff;
-  }
+  .check-box { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; background: #fff; }
   .check-box.checked { background: var(--grn); border-color: var(--grn); }
-  .check-box.checked::after {
-    content: '';
-    width: 10px; height: 6px;
-    border-left: 2px solid #fff;
-    border-bottom: 2px solid #fff;
-    transform: rotate(-45deg) translateY(-1px);
-  }
+  .check-box.checked::after { content: ''; width: 10px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-1px); }
   .check-label { font-size: 14px; line-height: 1.4; flex: 1; }
   .check-item.done .check-label { color: var(--muted); text-decoration: line-through; }
   .info-callout { margin: 0; border-bottom: 1px solid var(--border); }
   .info-callout:last-child { border-bottom: none; }
-  .callout-title {
-    font-size: 12px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.7px;
-    color: var(--acc);
-    padding: 12px 20px 6px;
-  }
-  .field-row {
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 20px;
-    border-bottom: 1px solid #F0EDE8;
-  }
+  .callout-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--acc); padding: 12px 20px 6px; }
+  .field-row { display: flex; align-items: center; gap: 10px; padding: 8px 20px; border-bottom: 1px solid #F0EDE8; }
   .field-row:last-child { border-bottom: none; }
   .field-label { font-size: 13px; color: var(--muted); width: 130px; flex-shrink: 0; }
-  .field-input {
-    flex: 1; border: 1px solid transparent; border-radius: 8px;
-    padding: 6px 10px; font-size: 13px;
-    background: transparent; color: var(--text);
-    transition: all 0.2s; font-family: inherit;
-  }
+  .field-input { flex: 1; border: 1px solid transparent; border-radius: 8px; padding: 6px 10px; font-size: 13px; background: transparent; color: var(--text); transition: all 0.2s; font-family: inherit; }
   .field-input:focus { outline: none; border-color: var(--grn); background: var(--grn-light); }
   .field-input.unsaved { border-color: var(--acc); background: var(--acc-light); }
-  .save-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: var(--card); border-top: 1px solid var(--border);
-    padding: 12px 20px;
-    display: flex; gap: 10px; align-items: center;
-    z-index: 200; box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
-  }
-  .save-btn {
-    flex: 1; background: var(--grn); color: #fff;
-    border: none; border-radius: 12px; padding: 14px;
-    font-size: 15px; font-weight: 700; cursor: pointer;
-    font-family: inherit; transition: background 0.2s;
-  }
+  .save-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--border); padding: 12px 20px; display: flex; gap: 10px; align-items: center; z-index: 200; box-shadow: 0 -2px 12px rgba(0,0,0,0.06); }
+  .save-btn { flex: 1; background: var(--grn); color: #fff; border: none; border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.2s; }
   .save-btn:hover { background: #1E6B48; }
   .save-btn:disabled { background: #9CB8AC; cursor: not-allowed; }
   .save-status { font-size: 13px; color: var(--muted); min-width: 100px; text-align: right; }
   .save-status.ok { color: var(--grn); }
   .save-status.err { color: var(--red); }
   .loading-state { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 15px; }
-  .spinner {
-    width: 32px; height: 32px;
-    border: 3px solid var(--border); border-top-color: var(--grn);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 14px;
-  }
+  .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--grn); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 14px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .drive-link {
-    display: flex; align-items: center; gap: 8px;
-    padding: 14px 20px; font-size: 13px;
-    color: var(--grn); text-decoration: none; font-weight: 600;
-    border-bottom: 1px solid var(--border);
-  }
+  .drive-link { display: flex; align-items: center; gap: 8px; padding: 14px 20px; font-size: 13px; color: var(--grn); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--border); }
   .drive-link:last-child { border-bottom: none; }
   .drive-link:hover { background: var(--grn-light); }
-  @media (max-width: 480px) {
-    .field-label { width: 110px; font-size: 12px; }
-    .field-input { font-size: 12px; }
-    .section-title { font-size: 14px; }
-  }
+  @media (max-width: 480px) { .field-label { width: 110px; font-size: 12px; } .field-input { font-size: 12px; } .section-title { font-size: 14px; } }
 </style>
 </head>
 <body>
-
 <div class="header">
   <h1>Nada's Unit Onboarding</h1>
   <p>Dubai Short-Term Rental Setup</p>
-  <div class="progress-bar-wrap">
-    <div class="progress-bar-fill" id="mainProgress" style="width:0%"></div>
-  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="mainProgress" style="width:0%"></div></div>
   <div class="progress-label" id="progressLabel">Loading...</div>
 </div>
-
 <div class="container" id="app">
-  <div class="loading-state">
-    <div class="spinner"></div>
-    Loading from Notion...
-  </div>
+  <div class="loading-state"><div class="spinner"></div><p>Loading from Notion...</p></div>
 </div>
-
 <div class="save-bar">
   <button class="save-btn" id="saveBtn" onclick="saveFields()">Save Unit Info</button>
   <div class="save-status" id="saveStatus"></div>
 </div>
-
 <script>
-const blockMap = {};
-const fieldMeta = {};
-const dirtyFields = new Set();
-const cbState = {};
-
-const STRUCTURE = [
-  {
-    id: 'registration',
-    title: 'Registration and Compliance',
-    checks: [
-      'DTCM Registration','DTCM Permit','Tourism Dirham Registration',
-      'Ejari Registration','Liability Insurance'
-    ]
-  },
-  {
-    id: 'furnishing',
-    title: 'Furnishing and Amenities',
-    checks: [
-      'Furnish per DTCM List','Smoke Detectors','Fire Extinguisher',
-      'Carbon Monoxide Detector','First Aid Kit','WiFi Router','Smart TV / Streaming Device'
-    ]
-  },
-  {
-    id: 'setup',
-    title: 'Setup and Services',
-    checks: [
-      'DEWA Account Setup','DU Telecom Setup','Smart Lock / Key Management','Professional Photography'
-    ]
-  },
-  {
-    id: 'documents',
-    title: 'Documents',
-    checks: [
-      'Passport / Emirates ID Copy','Title Deed','DTCM Permit Certificate',
-      'Ejari Certificate','Insurance Policy','DEWA Connection Letter','Inventory List Signed'
-    ]
-  },
-  {
-    id: 'final',
-    title: 'Final Inspection',
-    checks: [
-      'Unit Deep Cleaned','All Appliances Tested','Guest Welcome Pack Ready',
-      'Listing Created on Platforms','Unit Photographed and Published'
-    ]
-  }
+var blockMap = {};
+var fieldMeta = {};
+var dirtyFields = new Set();
+var cbState = {};
+var STRUCTURE = [
+  { id: 'registration', title: 'Registration and Compliance', checks: ['DTCM Registration','DTCM Permit','Tourism Dirham Registration','Ejari Registration','Liability Insurance'] },
+  { id: 'furnishing', title: 'Furnishing and Amenities', checks: ['Furnish per DTCM List','Smoke Detectors','Fire Extinguisher','Carbon Monoxide Detector','First Aid Kit','WiFi Router','Smart TV / Streaming Device'] },
+  { id: 'setup', title: 'Setup and Services', checks: ['DEWA Account Setup','DU Telecom Setup','Smart Lock / Key Management','Professional Photography'] },
+  { id: 'documents', title: 'Documents', checks: ['Passport / Emirates ID Copy','Title Deed','DTCM Permit Certificate','Ejari Certificate','Insurance Policy','DEWA Connection Letter','Inventory List Signed'] },
+  { id: 'final', title: 'Final Inspection', checks: ['Unit Deep Cleaned','All Appliances Tested','Guest Welcome Pack Ready','Listing Created on Platforms','Unit Photographed and Published'] }
 ];
-
-const UNIT_INFO = {
-  id: 'unitinfo',
-  title: 'Unit Information',
+var UNIT_INFO = {
+  id: 'unitinfo', title: 'Unit Information',
   callouts: [
-    { ctx: 'Building Details', fields: ['Building Name','Unit Number','Floor Number','Community'] },
-    { ctx: 'Unit Specs', fields: ['Bedrooms','Bathrooms','Size sqft','Parking Slot'] },
-    { ctx: 'Access Details', fields: ['Main Door Code','Building Access Code','Parking Code'] },
-    { ctx: 'Wi-Fi Details', fields: ['Network Name','Password'] },
-    { ctx: 'Parking Details', fields: ['Parking Type','Slot Number','Access Method'] },
-    { ctx: 'DEWA Login', fields: ['Account Number','Username','Password'] },
-    { ctx: 'DU Login', fields: ['Account Number','Username','Password'] }
+    { ctx: 'Building Details', fields: ['Management Email','Building Registration Process','Building Name','Address','Location Link'] },
+    { ctx: 'Unit Specs', fields: ['Bedrooms','Bathrooms','Unit Size (SQM)','Bed Size(s)','Sofa Bed','Kitchenware Quantity'] },
+    { ctx: 'Access Details', fields: ['Smart Lock','Smart Lock Code','Number of Keys','Access Cards (Quantity)'] },
+    { ctx: 'Wi-Fi Details', fields: ['Username / SSID','Password'] },
+    { ctx: 'Parking Details', fields: ['Parking Number','Floor / Location'] },
+    { ctx: 'DEWA Login', fields: ['Username','Password','Account Number'] },
+    { ctx: 'DU Login', fields: ['Username','Password','Account Number','Due Date'] }
   ]
 };
-
-async function apiGet(url) {
-  const r = await fetch(url);
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  return r.json();
-}
-async function apiPatch(url, body) {
-  const r = await fetch(url, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+function apiGet(url) { return fetch(url).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }); }
+function apiPatch(url, body) { return fetch(url,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }); }
+function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function load() {
+  apiGet('/api/page').then(function(data){ renderPage(data); }).catch(function(e){
+    document.getElementById('app').innerHTML = '<div class="loading-state">Could not load Notion data.<br><small>'+e.message+'</small><br><button onclick="load()" style="margin-top:16px;padding:10px 24px;background:var(--grn);color:#fff;border:none;border-radius:8px;cursor:pointer;">Retry</button></div>';
   });
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  return r.json();
 }
-
-async function load() {
-  try {
-    const data = await apiGet('/api/page');
-    renderPage(data);
-  } catch (e) {
-    document.getElementById('app').innerHTML =
-      '<div class="loading-state">Could not load Notion data.<br><small>' + e.message + '</small>' +
-      '<button onclick="load()" style="margin-top:16px;padding:10px 24px;background:var(--grn);color:#fff;border:none;border-radius:8px;cursor:pointer;">Retry</button></div>';
-  }
-}
-
-function escHtml(s) {
-  return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
 function renderPage(data) {
-  const checkboxes = data.checkboxes || [];
-  const fields = data.fields || [];
-  const cbByLabel = {};
-  checkboxes.forEach(function(cb) { cbByLabel[cb.label.toLowerCase().trim()] = cb; });
-  const fieldsByCtxLabel = {};
-  fields.forEach(function(f) {
-    var key = (f.context + '|' + f.label).toLowerCase().trim();
+  var checkboxes = data.checkboxes, fields = data.fields;
+  var cbByLabel = {};
+  checkboxes.forEach(function(cb){ cbByLabel[cb.label.toLowerCase().trim()] = cb; });
+  var fieldsByCtxLabel = {};
+  fields.forEach(function(f){
+    var key = (f.context+'|'+f.label).toLowerCase().trim();
     fieldsByCtxLabel[key] = f;
-    if (!fieldsByCtxLabel[f.label.toLowerCase().trim()]) fieldsByCtxLabel[f.label.toLowerCase().trim()] = f;
+    if(!fieldsByCtxLabel[f.label.toLowerCase().trim()]) fieldsByCtxLabel[f.label.toLowerCase().trim()] = f;
   });
-
   var app = document.getElementById('app');
   var html = '';
-
-  STRUCTURE.forEach(function(section) {
-    html += '<div class="section"><div class="section-header"><span class="section-title">' + section.title + '</span>';
-    html += '<div class="section-mini-bar"><div class="mini-bar-track"><div class="mini-bar-fill" id="bar_' + section.id + '" style="width:0%"></div></div>';
-    html += '<span class="mini-count" id="cnt_' + section.id + '">0/' + section.checks.length + '</span></div></div>';
-
-    section.checks.forEach(function(label, i) {
+  STRUCTURE.forEach(function(section){
+    html += '<div class="section"><div class="section-header"><span class="section-title">'+section.title+'</span><div class="section-mini-bar"><div class="mini-bar-track"><div class="mini-bar-fill" id="bar_'+section.id+'" style="width:0%"></div></div><span class="mini-count" id="cnt_'+section.id+'">0/'+section.checks.length+'</span></div></div>';
+    section.checks.forEach(function(label, i){
       var notionCb = cbByLabel[label.toLowerCase().trim()];
-      var elemId = 'cb_' + section.id + '_' + i;
+      var elemId = 'cb_'+section.id+'_'+i;
       var checked = notionCb ? notionCb.checked : false;
-      if (notionCb) { blockMap[elemId] = notionCb.id; cbState[notionCb.id] = checked; }
-      html += '<div class="check-item' + (checked ? ' done' : '') + '" id="item_' + elemId + '" onclick="toggleCheck('' + elemId + '','' + (notionCb ? notionCb.id : '') + '')">';
-      html += '<div class="check-box' + (checked ? ' checked' : '') + '" id="box_' + elemId + '"></div>';
-      html += '<span class="check-label">' + label + '</span></div>';
+      if(notionCb){ blockMap[elemId]=notionCb.id; cbState[notionCb.id]=checked; }
+      var nid = notionCb ? notionCb.id : '';
+      html += '<div class="check-item'+(checked?' done':'')+'" id="item_'+elemId+'" onclick="toggleCheck(''+elemId+'',''+nid+'')"><div class="check-box'+(checked?' checked':'')+'" id="box_'+elemId+'"></div><span class="check-label">'+label+'</span></div>';
     });
     html += '</div>';
   });
-
-  html += '<div class="section"><div class="section-header"><span class="section-title">' + UNIT_INFO.title + '</span></div>';
-  UNIT_INFO.callouts.forEach(function(callout) {
-    html += '<div class="info-callout"><div class="callout-title">' + callout.ctx + '</div>';
-    callout.fields.forEach(function(fieldLabel) {
-      var key = (callout.ctx + '|' + fieldLabel).toLowerCase().trim();
+  html += '<div class="section"><div class="section-header"><span class="section-title">'+UNIT_INFO.title+'</span></div>';
+  UNIT_INFO.callouts.forEach(function(callout){
+    html += '<div class="info-callout"><div class="callout-title">'+callout.ctx+'</div>';
+    callout.fields.forEach(function(fieldLabel){
+      var key = (callout.ctx+'|'+fieldLabel).toLowerCase().trim();
       var notion = fieldsByCtxLabel[key];
-      var inputId = 'field_' + callout.ctx.replace(/\s+/g,'_') + '_' + fieldLabel.replace(/\s+/g,'_');
+      var inputId = 'field_'+callout.ctx.replace(/s+/g,'_')+'_'+fieldLabel.replace(/s+/g,'_');
       var value = notion ? notion.value : '';
-      if (notion) fieldMeta[inputId] = { notionId: notion.id, label: notion.label };
-      html += '<div class="field-row"><span class="field-label">' + fieldLabel + '</span>';
-      html += '<input class="field-input" id="' + inputId + '" type="text" value="' + escHtml(value) + '" placeholder="—" oninput="markDirty('' + inputId + '')"' + (!notion ? ' disabled' : '') + '></div>';
+      if(notion) fieldMeta[inputId] = { notionId: notion.id, label: notion.label };
+      html += '<div class="field-row"><span class="field-label">'+fieldLabel+'</span><input class="field-input" id="'+inputId+'" type="text" value="'+escHtml(value)+'" placeholder="-" oninput="markDirty(''+inputId+'')"'+((!notion)?' disabled title="Not found in Notion"':'')+'>  </div>';
     });
     html += '</div>';
   });
-  html += '<a class="drive-link" href="https://drive.google.com/drive/folders/1jUqWcN1L9APnnUOE4417VLYcKxo2WneV" target="_blank">Open Google Drive Documents</a>';
-  html += '</div>';
-
+  html += '<a class="drive-link" href="https://drive.google.com/drive/folders/1jUqWcN1L9APnnUOE4417VLYcKxo2WneV" target="_blank">Open Google Drive Documents</a></div>';
   app.innerHTML = html;
   recalcProgress();
 }
-
-async function toggleCheck(elemId, notionId) {
-  if (!notionId) return;
+function toggleCheck(elemId, notionId) {
+  if(!notionId) return;
   var newChecked = !cbState[notionId];
   cbState[notionId] = newChecked;
-  var box = document.getElementById('box_' + elemId);
-  var item = document.getElementById('item_' + elemId);
-  if (newChecked) { box.classList.add('checked'); item.classList.add('done'); }
+  var box = document.getElementById('box_'+elemId);
+  var item = document.getElementById('item_'+elemId);
+  if(newChecked){ box.classList.add('checked'); item.classList.add('done'); }
   else { box.classList.remove('checked'); item.classList.remove('done'); }
   recalcProgress();
-  try {
-    await apiPatch('/api/checkbox', { id: notionId, checked: newChecked });
-  } catch(e) {
-    cbState[notionId] = !newChecked;
-    if (!newChecked) { box.classList.add('checked'); item.classList.add('done'); }
+  apiPatch('/api/checkbox',{id:notionId,checked:newChecked}).catch(function(e){
+    cbState[notionId]=!newChecked;
+    if(!newChecked){ box.classList.add('checked'); item.classList.add('done'); }
     else { box.classList.remove('checked'); item.classList.remove('done'); }
     recalcProgress();
     alert('Could not save. Check your connection.');
-  }
+  });
 }
-
 function markDirty(inputId) {
   dirtyFields.add(inputId);
   var el = document.getElementById(inputId);
-  if (el) el.classList.add('unsaved');
+  if(el) el.classList.add('unsaved');
   setStatus('','');
 }
-
-async function saveFields() {
-  if (dirtyFields.size === 0) { setStatus('Nothing to save','ok'); return; }
+function saveFields() {
+  if(dirtyFields.size===0){ setStatus('Nothing to save','ok'); return; }
   var btn = document.getElementById('saveBtn');
   btn.disabled = true; btn.textContent = 'Saving...';
   var toSave = Array.from(dirtyFields);
   var errors = 0;
-  for (var i = 0; i < toSave.length; i++) {
-    var inputId = toSave[i];
-    var meta = fieldMeta[inputId];
-    if (!meta) continue;
-    var el = document.getElementById(inputId);
-    var value = el ? el.value : '';
-    try {
-      await apiPatch('/api/field', { id: meta.notionId, label: meta.label, value: value });
-      el.classList.remove('unsaved');
-      dirtyFields.delete(inputId);
-    } catch(e) { errors++; }
-  }
-  btn.disabled = false; btn.textContent = 'Save Unit Info';
-  if (errors === 0) setStatus('Saved to Notion','ok');
-  else setStatus(errors + ' field(s) failed','err');
-}
-
-function setStatus(msg, cls) {
-  var el = document.getElementById('saveStatus');
-  el.textContent = msg; el.className = 'save-status ' + cls;
-}
-
-function recalcProgress() {
-  var total = 0, done = 0;
-  STRUCTURE.forEach(function(section) {
-    var sTotal = section.checks.length, sDone = 0;
-    section.checks.forEach(function(label, i) {
-      var elemId = 'cb_' + section.id + '_' + i;
-      var notionId = blockMap[elemId];
-      if (notionId && cbState[notionId]) sDone++;
+  var chain = Promise.resolve();
+  toSave.forEach(function(inputId){
+    chain = chain.then(function(){
+      var meta = fieldMeta[inputId];
+      if(!meta) return;
+      var el = document.getElementById(inputId);
+      var value = el ? el.value : '';
+      return apiPatch('/api/field',{id:meta.notionId,label:meta.label,value:value}).then(function(){
+        el.classList.remove('unsaved'); dirtyFields.delete(inputId);
+      }).catch(function(){ errors++; });
     });
-    total += sTotal; done += sDone;
-    var pct = sTotal ? Math.round(sDone/sTotal*100) : 0;
-    var barEl = document.getElementById('bar_' + section.id);
-    var cntEl = document.getElementById('cnt_' + section.id);
-    if (barEl) barEl.style.width = pct + '%';
-    if (cntEl) cntEl.textContent = sDone + '/' + sTotal;
   });
-  var pct = total ? Math.round(done/total*100) : 0;
-  var mainBar = document.getElementById('mainProgress');
-  var lbl = document.getElementById('progressLabel');
-  if (mainBar) mainBar.style.width = pct + '%';
-  if (lbl) lbl.textContent = done + ' of ' + total + ' tasks complete (' + pct + '%)';
+  chain.then(function(){
+    btn.disabled=false; btn.textContent='Save Unit Info';
+    if(errors===0) setStatus('Saved to Notion','ok');
+    else setStatus(errors+' field(s) failed','err');
+  });
 }
-
+function setStatus(msg,cls){ var el=document.getElementById('saveStatus'); el.textContent=msg; el.className='save-status '+cls; }
+function recalcProgress() {
+  var total=0,done=0;
+  STRUCTURE.forEach(function(section){
+    var sTotal=section.checks.length,sDone=0;
+    section.checks.forEach(function(label,i){
+      var elemId='cb_'+section.id+'_'+i;
+      var notionId=blockMap[elemId];
+      if(notionId&&cbState[notionId]) sDone++;
+    });
+    total+=sTotal; done+=sDone;
+    var pct=sTotal?Math.round(sDone/sTotal*100):0;
+    var barEl=document.getElementById('bar_'+section.id);
+    var cntEl=document.getElementById('cnt_'+section.id);
+    if(barEl) barEl.style.width=pct+'%';
+    if(cntEl) cntEl.textContent=sDone+'/'+sTotal;
+  });
+  var pct=total?Math.round(done/total*100):0;
+  var mainBar=document.getElementById('mainProgress');
+  var lbl=document.getElementById('progressLabel');
+  if(mainBar) mainBar.style.width=pct+'%';
+  if(lbl) lbl.textContent=done+' of '+total+' tasks complete ('+pct+'%)';
+}
 load();
 </script>
 </body>
